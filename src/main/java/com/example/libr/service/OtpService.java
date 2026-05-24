@@ -20,7 +20,7 @@ public class OtpService implements IOtpService {
     private final StringRedisTemplate redisTemplate;
     private final PasswordEncoder passwordEncoder;
 
-    @Value("${app.otp.expiry}")
+    @Value("${app.otp.expiration}")
     private long otpExpiry;
 
     private static final String VERIFY_PREFIX = "otp:verify:";

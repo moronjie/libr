@@ -39,7 +39,7 @@ public class AuthService implements UserDetailsService {
     private final JwtUtils jwtUtils;
     private final PasswordEncoder passwordEncoder;
 
-    @Value("${app.jwt.refresh-token-expiry}")
+    @Value("${app.jwt.refresh-token-expiration}")
     private long refreshTokenExpiry;
 
     // ── UserDetailsService (used by JwtAuthFilter) ──────────────────────────

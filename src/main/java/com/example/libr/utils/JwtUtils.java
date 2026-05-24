@@ -18,10 +18,10 @@ public class JwtUtils {
     @Value("${app.jwt.secret}")
     private String secret;
 
-    @Value("${app.jwt.access-token-expiry}")
+    @Value("${app.jwt.access-token-expiration}")
     private long accessTokenExpiry;
 
-    @Value("${app.jwt.refresh-token-expiry}")
+    @Value("${app.jwt.refresh-token-expiration}")
     private long refreshTokenExpiry;
 
     private SecretKey getSigningKey() {
