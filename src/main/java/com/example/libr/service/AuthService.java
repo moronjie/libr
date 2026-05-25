@@ -38,6 +38,7 @@ public class AuthService implements UserDetailsService {
     private final EmailService emailService;
     private final JwtUtils jwtUtils;
     private final PasswordEncoder passwordEncoder;
+    private final MemberService memberService;
 
     @Value("${app.jwt.refresh-token-expiration}")
     private long refreshTokenExpiry;
@@ -93,6 +94,8 @@ public class AuthService implements UserDetailsService {
 
         user.setVerified(true);
         userRepository.save(user);
+
+        memberService.initializeMember(user);
 
         return new MessageResponse("Email verified successfully. You can now log in.");
     }
