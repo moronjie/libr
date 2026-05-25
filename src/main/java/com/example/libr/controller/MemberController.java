@@ -4,7 +4,7 @@ import com.example.libr.dto.request.CompleteProfileRequest;
 import com.example.libr.dto.request.UpdateMemberRequest;
 import com.example.libr.dto.response.MemberResponse;
 import com.example.libr.payload.ApiResponse;
-import com.example.libr.service.impl.IMemberService;
+import com.example.libr.service.MemberService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -22,7 +22,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class MemberController {
 
-    private final IMemberService memberService;
+    private final MemberService memberService;
 
     // ── GET /api/v1/members/me
     @GetMapping("/me")

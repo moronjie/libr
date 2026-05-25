@@ -24,14 +24,14 @@ import java.util.UUID;
 // modules/member/MemberService.java
 @Service
 @RequiredArgsConstructor
-public class MemberService implements IMemberService {public class MemberService implements IMemberService {
+public class MemberService implements IMemberService {
 
     private final MemberRepository memberRepository;
     private final UserRepository userRepository;
 
     private static final int DEFAULT_MEMBERSHIP_DURATION_DAYS = 365;
 
-    // ── Called automatically by AuthService after email verification ──────────
+    //Called automatically by AuthService after email verification
 
     public void initializeMember(User user) {
         if (memberRepository.existsByUser(user)) return;
@@ -47,7 +47,7 @@ public class MemberService implements IMemberService {public class MemberService
         memberRepository.save(member);
     }
 
-    // ── Complete Profile (first time after registration) ──────────────────────
+    //Complete Profile (first time after registration)
 
     public MemberResponse completeProfile(UUID userId, CompleteProfileRequest request) {
         Member member = findMemberByUserId(userId);
@@ -70,25 +70,25 @@ public class MemberService implements IMemberService {public class MemberService
         return mapToResponse(memberRepository.save(member));
     }
 
-    // ── Get My Profile ────────────────────────────────────────────────────────
+    //Get My Profile
 
     public MemberResponse getMyProfile(UUID userId) {
         return mapToResponse(findMemberByUserId(userId));
     }
 
-    // ── Get Member by ID (Admin) ──────────────────────────────────────────────
+    //Get Member by ID (Admin)
 
     public MemberResponse getMemberById(UUID memberId) {
         return mapToResponse(findMember(memberId));
     }
 
-    // ── Get All Members (Admin) ───────────────────────────────────────────────
+    //Get All Members (Admin)
 
     public Page<MemberResponse> getAllMembers(Pageable pageable) {
         return memberRepository.findAll(pageable).map(this::mapToResponse);
     }
 
-    // ── Update My Profile ─────────────────────────────────────────────────────
+    //Update My Profile
 
     public MemberResponse updateMyProfile(UUID userId, UpdateMemberRequest request) {
         Member member = findMemberByUserId(userId);
@@ -96,7 +96,7 @@ public class MemberService implements IMemberService {public class MemberService
         return mapToResponse(memberRepository.save(member));
     }
 
-    // ── Update Any Member (Admin) ─────────────────────────────────────────────
+    //Update Any Member (Admin)
 
     public MemberResponse updateMember(UUID memberId, UpdateMemberRequest request) {
         Member member = findMember(memberId);
@@ -108,7 +108,7 @@ public class MemberService implements IMemberService {public class MemberService
         return mapToResponse(memberRepository.save(member));
     }
 
-    // ── Renew Membership (Admin) ──────────────────────────────────────────────
+    //Renew Membership (Admin)
 
     public MemberResponse renewMembership(UUID memberId) {
         Member member = findMember(memberId);
@@ -123,7 +123,7 @@ public class MemberService implements IMemberService {public class MemberService
         return mapToResponse(memberRepository.save(member));
     }
 
-    // ── Expire Memberships — runs every midnight ──────────────────────────────
+    //Expire Memberships — runs every midnight
 
     @Scheduled(cron = "0 0 0 * * *")
     public void expireOutdatedMemberships() {
@@ -132,7 +132,7 @@ public class MemberService implements IMemberService {public class MemberService
         memberRepository.saveAll(expired);
     }
 
-    // ── Validate Can Borrow (called by Borrowing module) ─────────────────────
+    //Validate Can Borrow (called by Borrowing module)
 
     public void validateCanBorrow(Member member, int currentBorrowCount) {
         if (!member.isProfileComplete()) {
@@ -160,8 +160,6 @@ public class MemberService implements IMemberService {public class MemberService
                     HttpStatus.FORBIDDEN);
         }
     }
-
-    // ── Helpers ───────────────────────────────────────────────────────────────
 
     private void applyBasicUpdates(Member member, UpdateMemberRequest request) {
         if (request.getPhone() != null) member.setPhone(request.getPhone());
