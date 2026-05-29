@@ -8,6 +8,7 @@ import com.example.libr.entity.Member;
 import com.example.libr.exception.AppException;
 import com.example.libr.repository.BookRepository;
 import com.example.libr.repository.BorrowRepository;
+import com.example.libr.service.impl.IBorrowService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -21,10 +22,9 @@ import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.UUID;
 
-// modules/borrowing/BorrowService.java
 @Service
 @RequiredArgsConstructor
-public class BorrowService {
+public class BorrowService implements IBorrowService {
 
     private final BorrowRepository borrowRepository;
     private final MemberService memberService;
