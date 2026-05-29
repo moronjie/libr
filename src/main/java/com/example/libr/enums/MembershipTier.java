@@ -7,11 +7,11 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public enum MembershipTier {
 
-    BASIC(2, 0),
-    STUDENT(5, 2),
-    PREMIUM(10, 3);
+    BASIC(2, 0, 14),
+    STUDENT(5, 0, 21),
+    PREMIUM(10, 3, 30);
 
     private final int maxBorrowLimit;
     private final int fineGraceDays;
+    private final int loanPeriodDays;
 }
-
