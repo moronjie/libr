@@ -29,6 +29,7 @@ public class BorrowService implements IBorrowService {
     private final BorrowRepository borrowRepository;
     private final MemberService memberService;
     private final BookRepository bookRepository;
+    private final ReservationService reservationService;
 
     private static final List<BorrowRecord.BorrowStatus> ACTIVE_STATUSES =
             List.of(BorrowRecord.BorrowStatus.ACTIVE, BorrowRecord.BorrowStatus.OVERDUE);
@@ -67,7 +68,6 @@ public class BorrowService implements IBorrowService {
         return mapToResponse(record);
     }
 
-
     @Transactional
     public BorrowResponse returnBook(UUID userId, UUID borrowRecordId) {
         Member member = memberService.findMemberByUserId(userId);
@@ -90,6 +90,9 @@ public class BorrowService implements IBorrowService {
         Book book = record.getBook();
         book.setAvailableCopies(book.getAvailableCopies() + 1);
         bookRepository.save(book);
+
+        // Trigger reservation queue
+        reservationService.processQueueOnReturn(book);
 
         return mapToResponse(record);
     }
